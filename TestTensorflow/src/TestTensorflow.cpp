@@ -102,7 +102,7 @@ void testTensorflow() {
     const std::vector<TF_Tensor*> input_tensors = {
         input_image, TF_NewTensor(TF_BOOL, nullptr, 0, {false}, sizeof(bool),
                                   &BoolDeallocator, nullptr)};
-    
+
     const std::vector<TF_Output> input_ops = {
         TFU.GetOperationByName(INPUT_TENSOR_NAME, 0),
         TFU.GetOperationByName("training_flag", 0)};

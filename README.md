@@ -66,4 +66,6 @@ if (status == TFUtils::SUCCESS) {
 
 ## TestTensorflowCC
 - 使用Tensorflow C++ API完成关键点识别
-- 编译中
+- 编译完成，暂时无法使用，寻找解决方案中
+- Java代码迁移，进行中
+- [参考资料](http://www.liuxiao.org/2018/10/tensorflow-c-%e4%bb%8e%e8%ae%ad%e7%bb%83%e5%88%b0%e9%83%a8%e7%bd%b23%ef%bc%9a%e4%bd%bf%e7%94%a8-keras-%e8%ae%ad%e7%bb%83%e5%92%8c%e9%83%a8%e7%bd%b2-cnn/)
