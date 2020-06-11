@@ -3,7 +3,7 @@
 ## TODOS
 - [x] 使用OpenCV完成关键点识别
 - [ ] 使用Tensorflow C API完成关键点识别
-- [ ] 使用Tensorflow C++ API完成关键点识别
+- [x] 使用Tensorflow C++ API完成关键点识别
 - [ ] 将代码迁移到UE4中
 
 ## TestOpenCV
@@ -69,5 +69,34 @@
 ## TestTensorflowCC
 - 使用Tensorflow C++ API完成关键点识别
 - 编译完成，暂时无法使用，寻找解决方案中
-- Java代码迁移，进行中
+- 使用方法：在main函数中调用
+  ```
+  testTensorflowCC();
+  ```
+- 已封装好的类：TfModelFaceDetect、TfModelLandmark
+  - 初始化，初始化成功返回0
+    ```
+    TfModelFaceDetect face;
+
+    int ret = face.init();
+    if (ret != 0) {
+      std::cout << "face init error" << std::endl;
+      return;
+    }
+    ```
+  - 预测并绘制结果
+    ```
+    std::vector<Figure> figures = face.predict(img);
+    for (Figure figure : figures) {
+      std::vector<cv::Point> landmarks = figure.getLandmarks();
+      cv::face::drawFacemarks(img, landmarks, cv::Scalar(0, 0, 255));
+    }
+    ```
+  - 其他：cv::Mat转换为tensorflow::Tensor
+    ```
+    #include "Mat2Tensor.h"
+    
+    // get a cv::Mat object
+    Mat2Tensor::mat2Tensor(mat);
+    ```
 - [参考资料](http://www.liuxiao.org/2018/10/tensorflow-c-%e4%bb%8e%e8%ae%ad%e7%bb%83%e5%88%b0%e9%83%a8%e7%bd%b23%ef%bc%9a%e4%bd%bf%e7%94%a8-keras-%e8%ae%ad%e7%bb%83%e5%92%8c%e9%83%a8%e7%bd%b2-cnn/)

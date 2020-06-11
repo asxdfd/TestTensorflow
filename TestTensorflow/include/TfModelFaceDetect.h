@@ -8,32 +8,30 @@
 
 #include "Figure.h"
 #include "opencv2/core/core.hpp"
-#include "tensorflow/cc/ops/const_op.h"
-#include "tensorflow/cc/ops/image_ops.h"
-#include "tensorflow/cc/ops/standard_ops.h"
-#include "tensorflow/core/framework/graph.pb.h"
-#include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/graph/default_device.h"
-#include "tensorflow/core/graph/graph_def_builder.h"
-#include "tensorflow/core/lib/core/errors.h"
-#include "tensorflow/core/lib/core/stringpiece.h"
-#include "tensorflow/core/lib/core/threadpool.h"
-#include "tensorflow/core/lib/io/path.h"
-#include "tensorflow/core/lib/strings/stringprintf.h"
-#include "tensorflow/core/platform/env.h"
-#include "tensorflow/core/platform/init_main.h"
-#include "tensorflow/core/platform/logging.h"
-#include "tensorflow/core/platform/types.h"
-#include "tensorflow/core/public/session.h"
-#include "tensorflow/core/util/command_line_flags.h"
+#include "opencv2/imgproc.hpp"
+#include "Mat2Tensor.h"
 #include "TfModelLandmark.h"
+
+class ReShapeImg {
+ public:
+  cv::Mat rs_mat;
+  float scale_x;
+  float scale_y;
+  ReShapeImg(cv::Mat &);
+  ~ReShapeImg();
+};
 
 class TfModelFaceDetect {
  public:
+  static int width;
+  static int height;
+  static int channel;
+  static cv::Size size;
   TfModelFaceDetect();
   ~TfModelFaceDetect();
   int init();
   std::vector<Figure> predict(cv::Mat &);
+  std::vector<std::vector<float>> simple_predict(ReShapeImg &);
 
  private:
   tensorflow::GraphDef graph;
@@ -46,17 +44,11 @@ class TfModelFaceDetect {
   tensorflow::Tensor flag;
   float thres;
   int batch;
-  int width;
-  int height;
-  int channel;
-  cv::Size size;
   int length;
   long shape[4];
   cv::Mat previous_image;
-  std::vector<float[]> trick_boxes;
+  std::vector<std::vector<float>> trick_boxes;
   std::vector<std::vector<cv::Point>> preLandmark;
-  std::vector<float[]> tmp_box;
+  std::vector<std::vector<float>> tmp_box;
   TfModelLandmark tfModelLandmark;
-  static tensorflow::Tensor Mat2Tensor(cv::Mat &, float);
-  std::vector<float[]> simple_predict(cv::Mat &);
 };

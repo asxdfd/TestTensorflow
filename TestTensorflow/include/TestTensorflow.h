@@ -12,5 +12,6 @@
 #include "opencv2/opencv.hpp"
 #include "opencv2/face.hpp"
 #include "TFUtils.h"
+#include "TfModelFaceDetect.h"
 
 // TODO: Reference additional headers your program requires here.

@@ -6,9 +6,11 @@
 int main() {
   void testOpenCV();
   void testTensorflow();
+  void testTensorflowCC();
 
   // testOpenCV();
-  testTensorflow();
+  // testTensorflow();
+  testTensorflowCC();
   return 0;
 }
 
@@ -148,6 +150,41 @@ void testTensorflow() {
     TFUtils::DeleteTensors(input_tensors);
     TFUtils::DeleteTensors(output_tensors);
 
+    // Display the resulting frame
+    cv::imshow("Frame", img);
+
+    // Press  ESC on keyboard to exit
+    char c = (char)cv::waitKey(25);
+    if (c == 27) break;
+  }
+}
+
+void testTensorflowCC() {
+  TfModelFaceDetect face;
+
+  int ret = face.init();
+  if (ret != 0) {
+    std::cout << "face init error" << std::endl;
+    return;
+  }
+
+  cv::VideoCapture v(0);
+
+  while (1) {
+    // Grab a frame
+    cv::Mat img;
+    v >> img;
+
+    if (img.empty()) break;
+
+    std::vector<Figure> figures = face.predict(img);
+    for (Figure figure : figures) {
+      std::vector<cv::Point> landmarks = figure.getLandmarks();
+      // 自定义绘制人脸特征点函数, 可绘制人脸特征点形状/轮廓
+      // drawLandmarks(frame, landmarks[i]);
+      // OpenCV自带绘制人脸关键点函数: drawFacemarks
+      cv::face::drawFacemarks(img, landmarks, cv::Scalar(0, 0, 255));
+    }
     // Display the resulting frame
     cv::imshow("Frame", img);
 
