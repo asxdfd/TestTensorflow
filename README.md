@@ -68,7 +68,6 @@
 
 ## TestTensorflowCC
 - 使用Tensorflow C++ API完成关键点识别
-- 编译完成，暂时无法使用，寻找解决方案中
 - 使用方法：在main函数中调用
   ```
   testTensorflowCC();
