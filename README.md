@@ -14,7 +14,7 @@
   testOpenCV();
   ```
 
-## TestTensorflow
+## ~~TestTensorflow（无法使用）~~
 - 使用Tensorflow C API完成关键点识别
 - 下载地址：[libtensorflow](https://tensorflow.google.cn/install/lang_c)
 - 工具类TFUtils：封装了Tensorflow C API
